@@ -1,0 +1,36 @@
+{
+  "name": "playwright-appium-bdd-ts-framework",
+  "version": "1.0.0",
+  "description": "This is a POC project to create a common framework using playwright, appium & cucumber to create script in type script for both web and mobile native application",
+  "keywords": [
+    "playwright",
+    "appium",
+    "cucumber",
+    "type",
+    "script"
+  ],
+  "license": "ISC",
+  "author": "Rajesh Kumar",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "web": "cucumber-js src/features/web/**/*.feature --require-module ts-node/register --require src/step-definitions/**/*.ts",
+    "mobile": "cucumber-js src/features/mobile/**/*.feature --require-module ts-node/register --require src/step-definitions/**/*.ts",
+    "parallel": "cucumber-js src/features/web/**/*.feature --require-module ts-node/register --require src/step-definitions/**/*.ts --parallel 2",
+    "all": "cucumber-js src/features/web/**/*.feature src/features/mobile/**/*.feature --require-module ts-node/register --require src/step-definitions/**/*.ts --parallel 2",
+    "build": "tsc",
+    "test": "npm run build && cucumber-js",
+    "check-device": "ts-node src/utils/check-device.ts"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.0.3",
+    "@cucumber/pretty-formatter": "^1.0.1",
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.9.0",
+    "appium": "^2.19.0",
+    "appium-uiautomator2-driver": "^4.2.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "webdriverio": "^9.15.0"
+  }
+}
