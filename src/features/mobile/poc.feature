@@ -6,4 +6,5 @@ Feature: Mobile Calculator
   @mobile
   Scenario: POC for appium
     Given I launch the Bajaj app
-    Then I accept to send notification
+    Then I continue with providing MPIN
+    Then I perform the search for car loan

@@ -18,20 +18,44 @@ Before({ tags: "@mobile", timeout: 300000 }, async function () {
     }
 });
 
-After({ tags: "@mobile" }, async function () {
-    await MobileDriver.close();
-});
+// After({ tags: "@mobile" }, async function () {
+//     await MobileDriver.close();
+// });
 
 Given('I launch the Bajaj app', { timeout: 300000 }, async function () {
     console.log('Launching Bajaj app...');
+    console.log('*************** Session ID ****************');
+    console.log(await MobileDriver.getDriver().sessionId);
+    console.log('******************************************');
+});
+
+Then('I perform poc test', { timeout: 300000 }, async function () {
+    await homePage.stratumtest();
+
+});
+
+Then('I navigate to my profile page', { timeout: 300000 }, async function () {
+    console.log('Accept notification...');
+    
+    await homePage.navigateToMyProfile('//android.widget.TextView[@text="My Profile"]');
+    await homePage.navigateToMyDetails('//android.widget.TextView[@text="My Details"]');
+    await homePage.fillPersonalDetails();
+
+});
+
+Then('I continue with providing MPIN', { timeout: 300000 }, async function () {
+    console.log('*************** Session ID ****************');
+    console.log(await MobileDriver.getDriver().sessionId);
+    console.log('******************************************');
+    await homePage.enterMPIN(); 
+});
+
+Then('I perform the search for car loan', { timeout: 300000 }, async function () {
+    console.log('*************** Session ID ****************');
+    console.log(await MobileDriver.getDriver().sessionId);
+    console.log('******************************************');
+    await homePage.performSearch();   
 });
 
 
-
-Then('I accept to send notification', { timeout: 300000 }, async function () {
-    await homePage.continueforMobileValidation('//android.widget.Button[@resource-id="org.altruist.BajajExperia:id/btnContinue"]');
-    await homePage.continueWithOTPValidation('//android.widget.Button[@resource-id="org.altruist.BajajExperia:id/continueWithOtpBtn"]');
-    await homePage.enterMobileNumber('//android.widget.EditText[@resource-id="org.altruist.BajajExperia:id/mobile_number"]');
-    await homePage.getOTP('//android.widget.Button[@resource-id="org.altruist.BajajExperia:id/btnGetOTP"]');
-});
 

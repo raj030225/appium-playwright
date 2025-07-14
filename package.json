@@ -26,6 +26,7 @@
     "@cucumber/cucumber": "^11.0.3",
     "@cucumber/pretty-formatter": "^1.0.1",
     "@playwright/test": "^1.52.0",
+    "@types/jquery": "^3.5.32",
     "@types/node": "^22.9.0",
     "appium": "^2.19.0",
     "appium-uiautomator2-driver": "^4.2.3",

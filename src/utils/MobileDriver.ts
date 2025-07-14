@@ -21,15 +21,26 @@ export class MobileDriver {
                     connectionRetryTimeout: 300000,
                     capabilities: {
                         platformName: "Android",
+                        'appium:browserName': "",
                         'appium:automationName': "UiAutomator2",
+                        // 'appium:deviceName': "adb-2B301FDH200HJS-InF8Pa._adb-tls-connect._tcp",
                         'appium:deviceName': "emulator-5554",
                         'appium:appPackage': "org.altruist.BajajExperia",
                         'appium:appActivity': "com.bfl.superapp.onboarding.revamp.activity.SplashActivity",
+
+                        // 'appium:deviceName': "emulator-5554",
+                        // 'appium:appPackage': "com.stratumfive_mobileapp",
+                        // 'appium:appActivity': "com.stratumfive_mobileapp/.MainActivity",
+
                         'appium:noReset': true,
                         'appium:newCommandTimeout': 120,
                         'appium:androidDeviceReadyTimeout': 60,
                         'appium:adbExecTimeout': 120000,
-                        'appium:autoGrantPermissions': true
+                        'appium:autoGrantPermissions': true,
+                        'appium:autoWebview': false,
+                        'appium:chromedriverExecutable': "C:/chromedrivers/124/chrome/chrome.exe",
+                        // 'appium:androidDeviceSocket': "chrome_devtools_remote"
+
                     }
                 });
                 // If we get here, the connection was successful
