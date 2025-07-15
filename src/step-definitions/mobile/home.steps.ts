@@ -29,33 +29,25 @@ Given('I launch the Bajaj app', { timeout: 300000 }, async function () {
     console.log('******************************************');
 });
 
-Then('I perform poc test', { timeout: 300000 }, async function () {
-    await homePage.stratumtest();
-
-});
-
-Then('I navigate to my profile page', { timeout: 300000 }, async function () {
-    console.log('Accept notification...');
-    
-    await homePage.navigateToMyProfile('//android.widget.TextView[@text="My Profile"]');
-    await homePage.navigateToMyDetails('//android.widget.TextView[@text="My Details"]');
-    await homePage.fillPersonalDetails();
-
-});
-
 Then('I continue with providing MPIN', { timeout: 300000 }, async function () {
-    console.log('*************** Session ID ****************');
-    console.log(await MobileDriver.getDriver().sessionId);
-    console.log('******************************************');
     await homePage.enterMPIN(); 
 });
 
 Then('I perform the search for car loan', { timeout: 300000 }, async function () {
-    console.log('*************** Session ID ****************');
-    console.log(await MobileDriver.getDriver().sessionId);
-    console.log('******************************************');
     await homePage.performSearch();   
 });
+
+Then('I navigate back to Home Page', { timeout: 300000 }, async function () {
+    await homePage.navigateToHomePage();   
+});
+
+Then('I navigate to Home Loan Page', { timeout: 300000 }, async function () {
+    await homePage.navigateToHomeLoanPage();
+
+});
+
+
+
 
 
 

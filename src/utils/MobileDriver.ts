@@ -39,7 +39,7 @@ export class MobileDriver {
                         'appium:autoGrantPermissions': true,
                         'appium:autoWebview': false,
                         'appium:chromedriverExecutable': "C:/chromedrivers/124/chrome/chrome.exe",
-                        // 'appium:androidDeviceSocket': "chrome_devtools_remote"
+                        'appium:androidDeviceSocket': "chrome_devtools_remote"
 
                     }
                 });

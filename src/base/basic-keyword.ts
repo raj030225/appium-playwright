@@ -48,6 +48,15 @@ export class BasicKeyword {
 
     // --- Playwright Actions ---
 
+    // async Click(selector: string) {
+    //     if (!this.playwrightPage){
+
+    //     }
+    //     await this.pwDrawBorder(selector); // Draw border for debugging
+    //     await this.playwrightPage.click(selector);
+    //     await this.playwrightPage.waitForTimeout(2000); // Wait for 1 second to ensure the click is registered
+    // }
+
     async pwClick(selector: string) {
         if (!this.playwrightPage) throw new Error('Playwright page not initialized');
         await this.pwDrawBorder(selector); // Draw border for debugging
@@ -55,9 +64,24 @@ export class BasicKeyword {
         await this.playwrightPage.waitForTimeout(2000); // Wait for 1 second to ensure the click is registered
     }
 
+    async apScroll() {
+        if (!this.appiumDriver) throw new Error('Appium driver not initialized');
+        await this.appiumDriver.execute('mobile: swipeGesture', {
+            left: 100,
+            top: 600,
+            width: 500,
+            height: 800,
+            direction: 'up',
+            percent: 0.75
+            });
+    }
+
+
     async apClick(selector: string) {
         if (!this.appiumDriver) throw new Error('Appium driver not initialized');
-        
+        console.log(" *********************** Handle Values **************************");
+        console.log(" Playwright Page Handle Value :=> " + this.playwrightPage);
+        console.log(" Appium Handle Value :=> " + this.appiumDriver);
         const el = await this.appiumDriver.$(selector);
         await el.waitForExist({ timeout: 50000, interval: 500 });
         await el.click();
@@ -72,7 +96,9 @@ export class BasicKeyword {
 
     async apType(selector: string, text: string) {
         if (!this.appiumDriver) throw new Error('Appium driver not initialized');
-        
+        console.log(" *********************** Handle Values **************************");
+        console.log(" Playwright Page Handle Value :=> " + this.playwrightPage);
+        console.log(" Appium Handle Value :=> " + this.appiumDriver);
         const el = await this.appiumDriver.$(selector);
         await el.waitForExist({ timeout: 50000, interval: 500 });
         await el.setValue(text);
@@ -80,7 +106,9 @@ export class BasicKeyword {
 
     async apSetValue(selector: string, value: string) {
         if (!this.appiumDriver) throw new Error('Appium driver not initialized');
-
+        console.log(" *********************** Handle Values **************************");
+        console.log(" Playwright Page Handle Value :=> " + this.playwrightPage);
+        console.log(" Appium Handle Value :=> " + this.appiumDriver);
         const el = await this.appiumDriver.$(selector);
         await el.waitForExist({ timeout: 50000, interval: 500 });
         await el.setValue(value);

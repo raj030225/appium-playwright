@@ -97,14 +97,32 @@ export class HomePage {
         await this.basic.apSetValue(txtMPIN3, '3');
         await this.basic.getAppiumDriver()?.pause(2000);
         await this.basic.apSetValue(txtMPIN4, '4');
-        await this.basic.getAppiumDriver()?.pause(30000); // Wait for 1 second to ensure the click is registered
+        await this.basic.getAppiumDriver()?.pause(30000);      
+    }
+
+    async navigateToHomeLoanPage(): Promise<void> {
+        await this.basic.apScroll();
+        await this.basic.getAppiumDriver()?.pause(15000);
+        await this.basic.apScroll();
+        await this.basic.getAppiumDriver()?.pause(15000);
+        await this.basic.apClick('//android.widget.TextView[@text="Home Loan"]');
+        await this.basic.getAppiumDriver()?.pause(10000);
+        await this.basic.apVerifyDisplayed('//android.widget.TextView[@text="Home Loan"]');
+        await this.basic.apVerifyText('//android.widget.TextView[@text="Home Loan"]', 'Home Loan');
+        await this.basic.getAppiumDriver()?.pause(5000);
+        await this.basic.apClick('//android.widget.TextView[@text="5"]');
+        await this.basic.getAppiumDriver()?.pause(5000);
+        await this.basic.apClick('//android.widget.TextView[@text="10"]');
+        await this.basic.getAppiumDriver()?.pause(5000);
+        await this.basic.apClick('//android.widget.TextView[@text="15"]');
+        await this.basic.getAppiumDriver()?.pause(5000);
     }
 
     async performSearch(): Promise<void> {
         const txtSearch = '//android.widget.EditText';
         const btnSearch = '//android.widget.EditText/following-sibling::android.view.View/android.widget.Image[2]';
-        await this.basic.apSetValue(txtSearch, 'Car Loan For Used Cars');
-        await this.basic.getAppiumDriver()?.pause(5000);
+        // await this.basic.apSetValue(txtSearch, 'Car Loan For Used Cars');
+        // await this.basic.getAppiumDriver()?.pause(5000);
         await this.basic.apClick(btnSearch);
         await this.basic.getAppiumDriver()?.pause(30000);
         // await this.basic.switchToWebView();
@@ -114,6 +132,12 @@ export class HomePage {
         await this.basic.apSetValue('//android.widget.EditText', 'Car Loan For Used Cars');
         await this.basic.getAppiumDriver()?.pause(9000);
         await this.basic.apClick('//android.widget.TextView[@text="Car Loan For Used Cars"]');
+        await this.basic.getAppiumDriver()?.pause(9000);
+        
+    }
+
+    async navigateToHomePage(): Promise<void> {
+        await this.basic.apClick('//android.view.View[@text="Home"]');
         await this.basic.getAppiumDriver()?.pause(9000);
     }
 
