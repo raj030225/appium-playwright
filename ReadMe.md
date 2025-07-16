@@ -28,9 +28,37 @@ playwright-appium-bdd-ts-framework/
 └── cucumber.js
 
 
+# Allure Reporting Integration
+
+This project is configured to generate Allure reports for your Cucumber tests.
+
+## How to Generate Allure Reports
+
+1. **Run your tests** as usual. After execution, Allure results will be saved in the `allure-results` directory.
+
+2. **Generate the Allure HTML report**:
+
+   ```powershell
+   npx allure-commandline generate allure-results --clean -o allure-report
+   ```
+
+3. **Open the Allure report** in your browser:
+
+   ```powershell
+   npx allure-commandline open allure-report
+   ```
+
+## Notes
+- The Allure results are automatically cleaned before each run.
+- You can add these commands as npm scripts for convenience.
+
+---
+For more details, see the [Allure documentation](https://docs.qameta.io/allure/).
+
+
 Features:
-Web: A sample login feature
-Mobile: A sample calculator feature
+Web: A sample feature
+Mobile: A sample feature
 To run the tests:
 For web tests: npm run test:web
 For mobile tests: npm run test:mobile

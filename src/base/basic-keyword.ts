@@ -20,10 +20,6 @@ export class BasicKeyword {
         const browser = await chromium.launch({ headless: false });
         const context = await browser.newContext();
         const page = await context.newPage();
-
-        console.log('Browser :--> ', browser);
-        console.log('Context :--> ', context);
-        console.log('Page :--> ', page);
         return { browser, context, page };
     }
 
@@ -31,6 +27,11 @@ export class BasicKeyword {
         this.playwrightPage = page;
         if (context) this.playwrightContext = context;
         if (browser) this.playwrightBrowser = browser;
+    }
+
+    async pwGoto(url: string) {
+        if (!this.playwrightPage) throw new Error('Playwright page not initialized');
+        await this.playwrightPage.goto(url);
     }
 
     // --- Appium Initializer ---
@@ -47,73 +48,109 @@ export class BasicKeyword {
     }
 
     // --- Playwright Actions ---
-
-    // async Click(selector: string) {
-    //     if (!this.playwrightPage){
-
-    //     }
-    //     await this.pwDrawBorder(selector); // Draw border for debugging
-    //     await this.playwrightPage.click(selector);
-    //     await this.playwrightPage.waitForTimeout(2000); // Wait for 1 second to ensure the click is registered
-    // }
-
-    async pwClick(selector: string) {
-        if (!this.playwrightPage) throw new Error('Playwright page not initialized');
-        await this.pwDrawBorder(selector); // Draw border for debugging
-        await this.playwrightPage.click(selector);
-        await this.playwrightPage.waitForTimeout(2000); // Wait for 1 second to ensure the click is registered
+    async sleep(ms: number): Promise<void> {
+        await new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    async apScroll() {
+    async waitForElement(selector: string, iteration:number) {
+        if (this.playwrightPage !== undefined) {
+            for( let i = 0; i < iteration; i++) {
+                if(await this.playwrightPage.isVisible(selector) === true) {   
+                    break;
+                }
+                else{
+                    await this.playwrightPage.waitForTimeout(500);
+                }
+            }
+        }
+
+        if (this.appiumDriver !== undefined) {
+            for( let i = 0; i < 100; i++) {
+                if(await this.appiumDriver.$(selector).isDisplayed() === true) {   
+                    break;
+                }
+                else{
+                    await this.appiumDriver.pause(500);
+                }
+            }
+        }
+    }
+
+    async clickElement(selector: string) {
+        if (this.playwrightPage !== undefined) {
+            await this.waitForElement(selector, 60);
+            await this.pwDrawBorder(selector); 
+            await this.playwrightPage.click(selector);
+            await this.playwrightPage.waitForTimeout(2000);
+        }
+
+        if (this.appiumDriver !== undefined) {
+            await this.waitForElement(selector, 60);
+            const el = await this.appiumDriver.$(selector).click();
+        }
+    }
+
+    async setValue(selector: string, value: string)  {
+        if (this.playwrightPage !== undefined) {
+            await this.waitForElement(selector, 60);
+            await this.pwDrawBorder(selector);
+            await this.playwrightPage.fill(selector, value);
+        }
+
+        if (this.appiumDriver !== undefined) {
+            await this.waitForElement(selector, 60);
+            const el = await this.appiumDriver.$(selector);
+            await el.setValue(value);
+            await this.appiumDriver.hideKeyboard();
+        }
+    }
+
+    async typeInput(selector: string, value: string)  {
+        if (this.playwrightPage !== undefined) {
+            await this.waitForElement(selector, 60);
+            await this.pwDrawBorder(selector);
+            await this.playwrightPage.fill(selector, value);
+        }
+
+        if (this.appiumDriver !== undefined) {
+            await this.waitForElement(selector, 60);
+            const el = await this.appiumDriver.$(selector);
+            await el.setValue(value);
+        }
+    }
+
+    async scroll(selector: string, direct: string, value: number) {
         if (!this.appiumDriver) throw new Error('Appium driver not initialized');
-        await this.appiumDriver.execute('mobile: swipeGesture', {
-            left: 100,
-            top: 600,
-            width: 500,
-            height: 800,
-            direction: 'up',
-            percent: 0.75
-            });
+        const windowRect = await this.appiumDriver.getWindowRect();
+        // const startX = windowRect.width / 2;
+        // const startY = windowRect.height * 0.8;
+        // const endY = windowRect.height * 0.2;
+
+        for( let i = 0; i < 10; i++) {
+            if(await this.appiumDriver.$(selector).isDisplayed() === true) {   
+                break;
+            }
+            else {
+                await this.appiumDriver.execute('mobile: swipeGesture', {
+                    left: windowRect.width * 0.25,
+                    top: windowRect.height * 0.25,
+                    width: windowRect.width * 0.80,
+                    height: windowRect.height * 0.60,
+                    direction: direct,
+                    percent: value, // e.g., 0.7
+                    });
+
+                // await this.appiumDriver.touchPerform([
+                //     { action: 'press', options: { x: startX, y: startY } },
+                //     { action: 'wait', options: { ms: 1000 } },
+                //     { action: 'moveTo', options: { x: startX, y: direct === 'up' ? endY : startY } },
+                //     { action: 'release' }
+                // ]);
+                await this.appiumDriver.pause(5000);
+            }
+        }
     }
 
-
-    async apClick(selector: string) {
-        if (!this.appiumDriver) throw new Error('Appium driver not initialized');
-        console.log(" *********************** Handle Values **************************");
-        console.log(" Playwright Page Handle Value :=> " + this.playwrightPage);
-        console.log(" Appium Handle Value :=> " + this.appiumDriver);
-        const el = await this.appiumDriver.$(selector);
-        await el.waitForExist({ timeout: 50000, interval: 500 });
-        await el.click();
-    }
-
-    async pwType(selector: string, text: string) {
-        if (!this.playwrightPage) throw new Error('Playwright page not initialized');
-        await this.pwDrawBorder(selector); // Draw border for debugging
-        await this.playwrightPage.fill(selector, text);
-        await this.playwrightPage.waitForTimeout(2000);
-    }
-
-    async apType(selector: string, text: string) {
-        if (!this.appiumDriver) throw new Error('Appium driver not initialized');
-        console.log(" *********************** Handle Values **************************");
-        console.log(" Playwright Page Handle Value :=> " + this.playwrightPage);
-        console.log(" Appium Handle Value :=> " + this.appiumDriver);
-        const el = await this.appiumDriver.$(selector);
-        await el.waitForExist({ timeout: 50000, interval: 500 });
-        await el.setValue(text);
-    }
-
-    async apSetValue(selector: string, value: string) {
-        if (!this.appiumDriver) throw new Error('Appium driver not initialized');
-        console.log(" *********************** Handle Values **************************");
-        console.log(" Playwright Page Handle Value :=> " + this.playwrightPage);
-        console.log(" Appium Handle Value :=> " + this.appiumDriver);
-        const el = await this.appiumDriver.$(selector);
-        await el.waitForExist({ timeout: 50000, interval: 500 });
-        await el.setValue(value);
-        await this.appiumDriver.hideKeyboard(); // Wait for 2 seconds to ensure the value is set
-    }
 
     async apPressKey(value: string) {
         if (!this.appiumDriver) throw new Error('Appium driver not initialized');
@@ -243,11 +280,7 @@ export class BasicKeyword {
         await this.playwrightPage.screenshot({ path });
     }
 
-    async pwGoto(url: string) {
-        if (!this.playwrightPage) throw new Error('Playwright page not initialized');
-        await this.playwrightPage.goto(url);
-        await this.playwrightPage.waitForTimeout(5000);
-    }
+    
 
     // --- Playwright Verifications ---
 

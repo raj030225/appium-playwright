@@ -4,6 +4,7 @@ import { HomePage } from '../../pages/mobile/HomePage';
 
 let homePage: HomePage;
 
+
 Before({ tags: "@mobile", timeout: 300000 }, async function () {
     console.log('Starting mobile test setup...');
     try {
@@ -18,9 +19,9 @@ Before({ tags: "@mobile", timeout: 300000 }, async function () {
     }
 });
 
-// After({ tags: "@mobile" }, async function () {
-//     await MobileDriver.close();
-// });
+After({ tags: "@mobile" }, async function () {
+    await MobileDriver.close();
+});
 
 Given('I launch the Bajaj app', { timeout: 300000 }, async function () {
     console.log('Launching Bajaj app...');
@@ -45,9 +46,6 @@ Then('I navigate to Home Loan Page', { timeout: 300000 }, async function () {
     await homePage.navigateToHomeLoanPage();
 
 });
-
-
-
 
 
 

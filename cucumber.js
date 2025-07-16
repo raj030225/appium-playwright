@@ -6,12 +6,13 @@ const config = {
     'src/step-definitions/**/*.ts'
   ],
   format: [
-    '@cucumber/pretty-formatter'
+    '@cucumber/pretty-formatter',
+    'allure-cucumberjs/reporter'
   ],
   formatOptions: {
     snippetInterface: 'async-await'
   },
-  timeout: 300000 // 5 minutes
+  timeout: 120000 // 5 minutes
 };
 
 module.exports = {

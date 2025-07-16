@@ -14,14 +14,14 @@ export class HomePage {
     }
 
     async performSearch(searchTerm: string) {
-        await this.basic.pwType('//div[@class="form-group"]/input', searchTerm);
-        await this.basic.pwClick('//i[@class="bf-icon-search"]');
+        await this.basic.typeInput('//div[@class="form-group"]/input', searchTerm);
+        await this.basic.clickElement('//i[@class="bf-icon-search"]');
     }
 
     async sortResult() {
         await this.basic.pwWaitForSelector('body');
-        await this.basic.pwClick('//span[@class="sort-by-txt"]');
-        await this.basic.pwClick('//div[@class="sortby-panel-list-main"]/span[2]');
+        await this.basic.clickElement('//span[@class="sort-by-txt"]');
+        await this.basic.clickElement('//div[@class="sortby-panel-list-main"]/span[2]');
     }
 }
 
