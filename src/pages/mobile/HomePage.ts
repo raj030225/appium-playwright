@@ -65,7 +65,7 @@ export class HomePage {
         // await this.basic.getAppiumDriver()?.pause(1000);
         await this.basic.typeInput(txtMPIN4, '4');
         // await this.basic.getAppiumDriver()?.pause(30000);   
-        await this.basic.sleep(25000);    
+        await this.basic.sleep(20000);    
     } 
 
     async performSearch(): Promise<void> {
@@ -93,7 +93,7 @@ export class HomePage {
         const lnkHomeLoan = '//android.widget.TextView[@text="Home Loan"]';
 
         // await this.basic.sleep(10000); 
-        await this.basic.scroll(lnkHomeLoan, 'up', 0.20);
+        await this.basic.scroll(lnkHomeLoan, 'up', 0.60);
         await this.basic.clickElement(lnkHomeLoan);
         await this.basic.sleep(10000); 
         await this.basic.apVerifyDisplayed('//android.widget.TextView[@text="Home Loan"]');

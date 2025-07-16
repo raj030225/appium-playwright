@@ -127,17 +127,27 @@ export class BasicKeyword {
         // const endY = windowRect.height * 0.2;
 
         for( let i = 0; i < 10; i++) {
-            if(await this.appiumDriver.$(selector).isDisplayed() === true) {   
+            if(await this.appiumDriver.$(selector).isDisplayed() === true) {  
+                await this.appiumDriver.execute('mobile: swipeGesture', {
+                    left: windowRect.width * 0.10,
+                    top: windowRect.height * 0.10,
+                    width: windowRect.width * 0.80,
+                    height: windowRect.height * 0.80,
+                    direction: direct,
+                    percent: value, // e.g., 0.7
+                    speed: 20 
+                    }); 
                 break;
             }
             else {
                 await this.appiumDriver.execute('mobile: swipeGesture', {
-                    left: windowRect.width * 0.25,
-                    top: windowRect.height * 0.25,
+                    left: windowRect.width * 0.10,
+                    top: windowRect.height * 0.10,
                     width: windowRect.width * 0.80,
-                    height: windowRect.height * 0.60,
+                    height: windowRect.height * 0.80,
                     direction: direct,
                     percent: value, // e.g., 0.7
+                    speed: 800 
                     });
 
                 // await this.appiumDriver.touchPerform([
