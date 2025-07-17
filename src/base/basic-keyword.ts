@@ -122,9 +122,6 @@ export class BasicKeyword {
     async scroll(selector: string, direct: string, value: number) {
         if (!this.appiumDriver) throw new Error('Appium driver not initialized');
         const windowRect = await this.appiumDriver.getWindowRect();
-        // const startX = windowRect.width / 2;
-        // const startY = windowRect.height * 0.8;
-        // const endY = windowRect.height * 0.2;
 
         for( let i = 0; i < 10; i++) {
             if(await this.appiumDriver.$(selector).isDisplayed() === true) {  
@@ -132,10 +129,10 @@ export class BasicKeyword {
                     left: windowRect.width * 0.10,
                     top: windowRect.height * 0.10,
                     width: windowRect.width * 0.80,
-                    height: windowRect.height * 0.80,
+                    height: windowRect.height * 0.40,
                     direction: direct,
-                    percent: value, // e.g., 0.7
-                    speed: 20 
+                    percent: 0.2, // e.g., 0.7
+                    speed: 50
                     }); 
                 break;
             }
@@ -149,13 +146,6 @@ export class BasicKeyword {
                     percent: value, // e.g., 0.7
                     speed: 800 
                     });
-
-                // await this.appiumDriver.touchPerform([
-                //     { action: 'press', options: { x: startX, y: startY } },
-                //     { action: 'wait', options: { ms: 1000 } },
-                //     { action: 'moveTo', options: { x: startX, y: direct === 'up' ? endY : startY } },
-                //     { action: 'release' }
-                // ]);
                 await this.appiumDriver.pause(5000);
             }
         }

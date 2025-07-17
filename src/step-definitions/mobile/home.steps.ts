@@ -44,8 +44,14 @@ Then('I navigate back to Home Page', { timeout: 300000 }, async function () {
 
 Then('I navigate to Home Loan Page', { timeout: 300000 }, async function () {
     await homePage.navigateToHomeLoanPage();
-
 });
 
+Then('I verify user is on Home Loan Page', { timeout: 300000 }, async function () {
+    await homePage.verifyHomeLoanPage();
+});
+
+Then('I select different EMI Term options on Home Loan Page', { timeout: 300000 }, async function () {
+    await homePage.selectDifferentEMITerms();
+});
 
 

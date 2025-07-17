@@ -95,18 +95,21 @@ export class HomePage {
         // await this.basic.sleep(10000); 
         await this.basic.scroll(lnkHomeLoan, 'up', 0.60);
         await this.basic.clickElement(lnkHomeLoan);
-        await this.basic.sleep(10000); 
-        await this.basic.apVerifyDisplayed('//android.widget.TextView[@text="Home Loan"]');
-        await this.basic.apVerifyText('//android.widget.TextView[@text="Home Loan"]', 'Home Loan');
-        // await this.basic.getAppiumDriver()?.pause(5000);
-        await this.basic.clickElement('//android.widget.TextView[@text="5"]');
-        // await this.basic.getAppiumDriver()?.pause(5000);
-        await this.basic.clickElement('//android.widget.TextView[@text="10"]');
-        // await this.basic.getAppiumDriver()?.pause(5000);
-        await this.basic.clickElement('//android.widget.TextView[@text="15"]');
-        // await this.basic.getAppiumDriver()?.pause(5000);
         await this.basic.sleep(10000);
     }
+
+    async verifyHomeLoanPage(): Promise<void> {
+        await this.basic.apVerifyDisplayed('//android.widget.TextView[@text="Home Loan"]');
+        await this.basic.apVerifyText('//android.widget.TextView[@text="Home Loan"]', 'Home Loan');
+    }
+
+    async selectDifferentEMITerms(): Promise<void> {
+        await this.basic.clickElement('//android.widget.TextView[@text="5"]');
+        await this.basic.clickElement('//android.widget.TextView[@text="10"]');
+        await this.basic.clickElement('//android.widget.TextView[@text="15"]');
+        await this.basic.sleep(10000);
+    }
+
 
     async navigateToHomePage(): Promise<void> {
         await this.basic.clickElement('//android.view.View[@text="Home"]');
