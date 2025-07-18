@@ -38,6 +38,9 @@ export class MobileDriver {
                     }
                 });
                 // If we get here, the connection was successful
+                if (this.driver && this.driver.startRecordingScreen) {
+                    await this.driver.startRecordingScreen();
+                }
                 return;
             } catch (error) {
                 lastError = error;
@@ -57,6 +60,15 @@ export class MobileDriver {
     static async close() {
         if (this.driver) {
             try {
+                if (this.driver.stopRecordingScreen) {
+                    const video = await this.driver.stopRecordingScreen();
+                    // Save video to file (base64)
+                    const fs = require('fs');
+                    const path = require('path');
+                    const videoPath = path.join(process.cwd(), 'videos', `mobile_${Date.now()}.mp4`);
+                    fs.mkdirSync(path.dirname(videoPath), { recursive: true });
+                    fs.writeFileSync(videoPath, Buffer.from(video, 'base64'));
+                }
                 await this.driver.deleteSession();
             } catch (error: any) {
                 console.error('Error closing session:', error.message);

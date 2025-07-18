@@ -12,12 +12,17 @@ export class WebDriver {
         this.browser = await playwright.chromium.launch({
             headless: false
         });
-        this.context = await this.browser.newContext();
+        this.context = await this.browser.newContext({
+            recordVideo: {
+                dir: 'videos/',
+                size: { width: 1280, height: 720 }
+            }
+        });
         this.page = await this.context.newPage();
 
-        console.log('*****************************************************************');
-        const jsonData = JSON.stringify(this.browser, null, 2); // Pretty print
-        console.log(jsonData);
+        // console.log('*****************************************************************');
+        // const jsonData = JSON.stringify(this.browser, null, 2); // Pretty print
+        // console.log(jsonData);
     }
 
     static getPage(): Page {
